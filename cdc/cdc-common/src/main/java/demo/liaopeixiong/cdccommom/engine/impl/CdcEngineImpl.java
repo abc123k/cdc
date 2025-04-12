@@ -1,7 +1,7 @@
 package demo.liaopeixiong.cdccommom.engine.impl;
 
 import demo.liaopeixiong.cdccommom.engine.CdcEngine;
-import demo.liaopeixiong.cdccommom.task.CdcTask;
+import demo.liaopeixiong.cdccommom.entity.CdcTask;
 
 import java.util.concurrent.ConcurrentHashMap;
 
