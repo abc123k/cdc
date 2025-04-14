@@ -14,6 +14,7 @@
     <fastjson.version>2.0.57</fastjson.version>
     <lombok.version>1.18.38</lombok.version>
     <postgresql.version>42.7.5</postgresql.version>
+    <druid.version>1.2.24</druid.version>
   </properties>
 
   <modules>
@@ -26,7 +27,12 @@
 
   <dependencies>
 
-    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>${druid.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot</artifactId>
