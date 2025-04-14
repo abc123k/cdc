@@ -7,7 +7,7 @@
   <version>1.0</version>
 
   <properties>
-    <java.version>11</java.version>
+    <java.version>17</java.version>
     <spring.version>3.4.4</spring.version>
     <okhttp.version>4.12.0</okhttp.version>
     <apache.commons.version>3.17.0</apache.commons.version>
