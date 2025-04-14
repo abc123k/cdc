@@ -3,29 +3,21 @@ package demo.liaopeixiong.cdccommom.engine.impl;
 import demo.liaopeixiong.cdccommom.engine.CdcEngine;
 import demo.liaopeixiong.cdccommom.entity.CdcTask;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 public class CdcEngineImpl implements CdcEngine {
 
-    private static ConcurrentHashMap<String, CdcTask> taskMap = new ConcurrentHashMap();
 
     @Override
-    public String addTask(String task) {
-        return "";
+    public void init(CdcTask task) {
+
     }
 
     @Override
-    public String removeTask(String task) {
-        return "";
+    public void start() {
+
     }
 
     @Override
-    public String taskCount() {
-        return "";
-    }
+    public void stop() {
 
-    @Override
-    public String checkTask() {
-        return "";
     }
 }
