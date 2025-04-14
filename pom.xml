@@ -13,6 +13,7 @@
     <apache.commons.version>3.17.0</apache.commons.version>
     <fastjson.version>2.0.57</fastjson.version>
     <lombok.version>1.18.38</lombok.version>
+    <postgresql.version>42.7.5</postgresql.version>
   </properties>
 
   <modules>
@@ -47,9 +48,22 @@
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <version>${spring.version}</version>
       <scope>test</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
     </dependency>
 
     <dependency>
@@ -64,7 +78,6 @@
       <version>${apache.commons.version}</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2 -->
     <dependency>
       <groupId>com.alibaba.fastjson2</groupId>
       <artifactId>fastjson2</artifactId>
