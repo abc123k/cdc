@@ -15,6 +15,11 @@
     <lombok.version>1.18.38</lombok.version>
     <postgresql.version>42.7.5</postgresql.version>
     <druid.version>1.2.24</druid.version>
+    <bcprov.jdk15on.version>1.70</bcprov.jdk15on.version>
+    <logging.log4j.version>2.24.3</logging.log4j.version>
+    <org.slf4j.version>1.7.9</org.slf4j.version>
+    <log4j.version>1.2.17</log4j.version>
+    <guava.version>33.4.8-jre</guava.version>
   </properties>
 
   <modules>
@@ -26,6 +31,30 @@
   </modules>
 
   <dependencies>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>${logging.log4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${logging.log4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>com.alibaba</groupId>
@@ -65,7 +94,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -95,6 +123,12 @@
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+      <version>${bcprov.jdk15on.version}</version>
     </dependency>
 
   </dependencies>

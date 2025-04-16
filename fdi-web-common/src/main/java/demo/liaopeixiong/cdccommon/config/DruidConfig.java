@@ -1,13 +1,18 @@
 package demo.liaopeixiong.cdccommon.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.support.jakarta.StatViewServlet;
+import com.alibaba.druid.support.jakarta.WebStatFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
 @Slf4j
 @Configuration
@@ -61,6 +66,12 @@ public class DruidConfig {
     @Value("${spring.datasource.maxPoolPreparedStatementPerConnectionSize}")
     private int maxPoolPreparedStatementPerConnectionSize;
 
+    @Value("${spring.datasource.statViewServlet.loginUsername}")
+    private String druidStatViewServletLoginUsername;
+
+    @Value("${spring.datasource.statViewServlet.loginPassword}")
+    private String druidStatViewServletLoginPassword;
+
     @Value("${spring.datasource.filters}")
     private String filters;
 
@@ -71,6 +82,50 @@ public class DruidConfig {
     @Primary
     public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
-        return null;
+        datasource.setUrl(this.dbUrl);
+        datasource.setUsername(username);
+        datasource.setPassword(password);
+        datasource.setDriverClassName(driverClassName);
+        datasource.setInitialSize(initialSize);
+        datasource.setMinIdle(minIdle);
+        datasource.setMaxActive(maxActive);
+        datasource.setMaxWait(maxWait);
+        datasource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+        datasource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+        datasource.setValidationQuery(validationQuery);
+        datasource.setTestWhileIdle(testWhileIdle);
+        datasource.setTestOnBorrow(testOnBorrow);
+        datasource.setTestOnReturn(testOnReturn);
+        datasource.setPoolPreparedStatements(poolPreparedStatements);
+        datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
+        datasource.setConnectionProperties(connectionProperties);
+        try {
+            datasource.setFilters(filters);
+        } catch (SQLException exception) {
+            log.info("init druid datasource error=[{}]",exception);
+        }
+        datasource.setConnectionProperties(connectionProperties);
+        return datasource;
+    }
+
+    // Druid监控相关
+    @Bean
+    public ServletRegistrationBean<StatViewServlet> druidServlet() {
+        ServletRegistrationBean<StatViewServlet> reg = new ServletRegistrationBean<>();
+        reg.setServlet(new StatViewServlet());
+        reg.addUrlMappings("/druid/*");
+        reg.addInitParameter("loginUsername", druidStatViewServletLoginUsername);
+        reg.addInitParameter("loginPassword", druidStatViewServletLoginPassword);
+        return reg;
+    }
+
+    @Bean
+    public FilterRegistrationBean<WebStatFilter> filterRegistrationBean() {
+        FilterRegistrationBean<WebStatFilter> filter = new FilterRegistrationBean<>();
+        WebStatFilter statFilter = new WebStatFilter();
+        filter.setFilter(statFilter);
+        filter.addUrlPatterns("/*");
+        filter.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
+        return filter;
     }
 }
