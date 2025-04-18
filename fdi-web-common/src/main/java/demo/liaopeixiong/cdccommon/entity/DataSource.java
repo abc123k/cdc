@@ -2,26 +2,27 @@ package demo.liaopeixiong.cdccommon.entity;
 
 import com.alibaba.fastjson2.JSONObject;
 import demo.liaopeixiong.cdccommon.exception.CdcNotSupportdException;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Comment;
-
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 @Setter
 @Getter
 @Entity
 @Table(name = "data_source",schema = "demo")
 @Comment("数据源表")
-public class DataSource implements Serializable {
+@SQLDelete(sql = "UPDATE demo.data_source SET deleted = true WHERE id = ?") // 重写删除 SQL
+@Where(clause = "deleted = false") // 自动过滤已删除数据
+public class DataSource extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Comment("数据源名字")
     @Column(unique = true,length = 255, name = "name")
@@ -32,8 +33,8 @@ public class DataSource implements Serializable {
     private String appId;
 
     @Comment("数据源配置")
-    @Column(columnDefinition = "json",name = "data_source_config")
-    private JSONObject dataSourceConfig;
+    @Column(columnDefinition = "text",name = "data_source_config")
+    private String dataSourceConfig;
 
     // TODO 这个字段先留着看看有没有用
     @Transient
@@ -47,13 +48,9 @@ public class DataSource implements Serializable {
     @Column(columnDefinition = "varchar",length = 255,name = "creator")
     private String creator;
 
-    @Comment("创建时间")
-    @Column(columnDefinition = "timestamp",name = "create_time")
-    private Timestamp createTime;
-
-    @Comment("更新时间")
-    @Column(columnDefinition = "timestamp",name = "update_time")
-    private Timestamp updateTime;
+    @Comment("逻辑删除")
+    @Column(name = "deleted")
+    private boolean deleted = false;
 
     public void setDataSourceConfigJson(Object dataSourceConfigJson) {
         if(null == dataSourceConfigJson){
