@@ -1,9 +1,9 @@
-package demo.liaopeixiong.cdccommom.engine.impl;
+package demo.liaopeixiong.cdcwriter.engine;
 
 import demo.liaopeixiong.cdccommom.engine.CdcEngine;
 import demo.liaopeixiong.cdccommom.entity.CdcTask;
 
-public class CdcEngineImpl implements CdcEngine {
+public class CdcWriterEngine implements CdcEngine {
 
     private CdcTask cdcTask;
 
@@ -20,5 +20,15 @@ public class CdcEngineImpl implements CdcEngine {
     @Override
     public void stop() {
 
+    }
+
+    private class EngineThread implements Runnable {
+
+
+
+        @Override
+        public void run() {
+
+        }
     }
 }

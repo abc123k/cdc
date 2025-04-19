@@ -1,12 +1,13 @@
 package demo.liaopeixiong.cdccommom.engine;
 
+import demo.liaopeixiong.cdccommom.entity.CdcTask;
+
 public interface CdcEngine {
 
-    public String addTask(String task);
+    public void init(CdcTask task);
 
-    public String removeTask(String task);
+    public void start();
 
-    public String taskCount();
+    public void stop();
 
-    public String checkTask();
 }
