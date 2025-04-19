@@ -3,7 +3,9 @@ package demo.liaopeixiong.cdccommon.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.jakarta.StatViewServlet;
 import com.alibaba.druid.support.jakarta.WebStatFilter;
+import demo.liaopeixiong.cdccommon.service.EncryptService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -78,13 +80,16 @@ public class DruidConfig {
     @Value("{spring.datasource.connectionProperties}")
     private String connectionProperties;
 
+    @Autowired
+    EncryptService encryptService;
+
     @Bean
     @Primary
     public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
         datasource.setUrl(this.dbUrl);
         datasource.setUsername(username);
-        datasource.setPassword(password);
+        datasource.setPassword(this.encryptService.decrypt(this.password));
         datasource.setDriverClassName(driverClassName);
         datasource.setInitialSize(initialSize);
         datasource.setMinIdle(minIdle);
